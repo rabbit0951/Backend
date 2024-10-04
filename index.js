@@ -28,8 +28,16 @@
 //////////////////////////////////////////Second Approach///////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-import {connectDB} from "./src/db/index.js"
-import 'dotenv/config'
+import {connectDB} from "./src/db/index.js";
+import 'dotenv/config';
 
-// conn
+// database connection 
 connectDB()
+.then(()=>{
+    app.on("error",(error)=>{
+        console.log("Error app",error)
+        throw error;
+    });
+    app.listen(process.env.PORT || 8000,()=>{console.log("server started at",process.env.PORT || 8000)})
+})
+.catch((err)=>{console.log("MONGODB CONNECTION FAILED",err)})
